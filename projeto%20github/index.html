@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<title>Escolha seu Filme</title>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Escolha seu Filme</h1>
+
+<form id="filmForm">
+
+<label for="age">Idade:</label>
+
+<input type="number" id="age" name="age" required min="1">
+
+<div class="categories">
+
+<label>Categoria de Filme:</label><br>
+
+<br>
+
+<input type="checkbox" id="action" name="category" value="Ação">
+
+<label for="action" class="checkbox">Ação</label>
+
+<input type="checkbox" id="comedy" name="category" value="Comédia">
+
+<label for="comedy" class="checkbox">Comédia</label>
+
+<input type="checkbox" id="drama" name="category" value="Drama">
+
+<label for="drama" class="checkbox">Drama</label>
+
+<input type="checkbox" id="animation" name="category" value="Animação">
+
+<label for="animation" class="checkbox">Animação</label>
+
+<input type="checkbox" id="suspense" name="category" value="Suspense">
+
+<label for="suspense" class="checkbox">Suspense</label>
+
+<input type="checkbox" id="horror" name="category" value="Terror">
+
+<label for="horror" class="checkbox">Terror</label>
+
+<input type="checkbox" id="sciFi" name="category" value="Ficção Cientifica">
+
+<label for="sciFi" class="checkbox">Ficção Cientifica</label>
+
+<input type="checkbox" id="adventure" name="category" value="Aventura">
+
+<label for="adventure" class="checkbox">Aventura</label>
+
+</div>
+
+<button type="submit">Confirmar</button>
+
+</form>
+
+<div id="movieResults"></div>
+
+</div>
+
+<script type="module" src="index.js"></script>
+
+</body>
+
+</html>
+
+import {movies} from './movies.js';
+
+document.getElementById('filmForm').addEventListener('submit', function (event) {
+
+event.preventDefault(); // Evita o envio do formulário
+
+// Obtém a idade e categorias selecionadas
+
+let age = parseInt(document.getElementById('age').value); // Converte a idade para número
+
+let categories = document.querySelectorAll('input[name="category"]:checked");
+
+let selectedCategories = [];
+
+for (let i = 0; i < categories.length; i++) {
+
+selected Categories.push(categories[i].value);
+
+}
+
+// Filtra os filmes com base na idade e categorias
+
+let filtered Movies;
+
+if (age >= 1 && age <= 9) {
+
+// Filtra filmes adequados para idade de 0 a 9
+
+filteredMovies = movies.filter(
+
+(movie) =>
+
+movie.ageRating <= 9 && selectedCategories.includes(movie.genre)
+
+} else {
+
+// Filtra filmes com base na categoria e idade filteredMovies = movies.filter(
+
+(movie) =>
+
+selectedCategories.includes (movie.genre) && movie.ageRating <= age );
+
+// Limpa os resultados anteriores
+
+let movieResults = document.getElementById('movieResults'); movieResults.innerHTML = ";
+
+// Exibe os filmes
+
+for (let i = 0; i < filteredMovies.length; i++) {
+
+let movie filteredMovies[i];
+
+let movieDiv = document.createElement('div');
+
+movieDiv.classList.add('movie');
+
+movieDiv.innerHTML =
+
+<h3>$(movie.title}</h3>
+
+<p><strong>Gênero:</strong> ${movie.genre}</p>
+
+<p><strong>Sinopse:</strong> ${movie.synopsis}</p>
+
+<iframe width="560" height="315" src="$(movie.trailer)"
+
+frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscop-
+
+picture-in-picture" allowfullscreen></iframe>
+
+movieResults.appendChild(movieDiv);
+
+}
+
+// Se não houver filmes compatíveis
+
+if (filteredMovies.length === 0) {
+
+movieResults.innerHTML = '<p>Nenhum filme encontrado para as categorias
+
+selecionadas.</p>';
+
+}
+
+});
+
+body {
+
+font-family: Arial, sans-serif;
+
+background-color: #1a1a1a;
+
+color: #f4f4f4;
+
+margin: 0;
+
+padding: 20px;
+
+}
+
+.container {
+
+max-width: 1200px;
+
+margin: 0 auto;
+
+padding: 20px;
+
+}
+
+h1 (
+
+text-align: center;
+
+color: #ffc107;
+
+}
+
+form (
+
+display: flex;
+
+flex-direction: column;
+
+}
+
+input[type="number"] {
+
+padding: 10px:
+
+margin-bottom: 15px;
+
+border-radius: 5px;
+
+border: 1px solid #ffc107;
+
+background-color: #333;
+
+color #ffc107;
+
+width: 150px;
+
+}
+
+.categories {
+
+margin-bottom: 15px;
+
+}
+
+label {
+
+font-weight: bold;
+
+margin-bottom: 5px;
+
+}
+
+input[type="checkbox"] {
+
+margin-top: 15px;
+
+display: none;
+
+}
+
+label.checkbox {
+
+display: flex,
+
+align-items: center;
+
+cursor: pointer;
+
+margin-bottom: 10px;
+
+position: relative;
+
+padding-left: 30px;
+
+}
+
+label.checkbox::before {
+
+content: ";
+
+position: absolute;
+
+left: 0;
+
+top: 50%;
+
+transform: translateY(-50%);
+
+width: 20px;
+
+height: 20px;
+
+border: 2px solid #ffc107;
+
+background-color: #333;
+
+border-radius: 5px;
+
+input[type="checkbox"]:checked + label.checkbox::before {
+
+background-color: #ffc107;
+
+}
+
+button {
+
+padding: 10px;
+
+background-color: #28a745;
+
+color: white;
+
+border: none;
+
+border-radius: 5px;
+)
+
+cursor: pointer;
+
+transition: background-color 0.3s;
+
+width: 150px;
+
+}
+
+button:hover {
+
+background-color: #218838;
+
+}
+
+#movieResults {
+
+margin-top: 20px;
+
+display: flex;
+
+flex-wrap: wrap;
+
+gap: 20px;
+
+}
+
+movie {
+
+background-color: #333;
+
+padding: 10px;
+
+border-radius: 5px;
+
+border: 1px solid #ddd;
+
+width: 500px;
+
+height: 500px;
+
+}
+
+.movie img {
+
+width: 100%;
+
+border-radius: 5px;
+
+}
+
+.movie h3 {
+
+margin: 0;
+
+font-size: 1em;
+
+}
+
+.movie p {
+
+margin: 5px 0;
+
+font-size: 0.9em;
+
+}
+
+iframe {
+
+width: 100%;
+
+height: 400px;
+
+margin-top: 10px;
+
+border: none;
+
+}
